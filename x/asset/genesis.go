@@ -10,6 +10,11 @@ import (
 // state.
 func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) {
 	// this line is used by starport scaffolding # genesis/module/init
+	sdk.RegisterDenom(genState.BaseDenom, sdk.NewDec(1))
+
+	for _, assetInfo := range genState.Assets {
+		k.setAsset(ctx, assetInfo)
+	}
 }
 
 // ExportGenesis returns the capability module's exported genesis.

@@ -1,4 +1,4 @@
-module github.com/songwongtp/asset
+module github.com/songwongtp/asset-chain
 
 go 1.15
 

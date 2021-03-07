@@ -1,0 +1,10 @@
+syntax = "proto3";
+package songwongtp.asset.asset;
+// this line is used by starport scaffolding # 1
+
+option go_package = "github.com/songwongtp/asset-chain/x/asset/types";
+
+message Asset {
+    string denom = 1;
+    uint64 price = 2;
+}

@@ -17,6 +17,7 @@ const (
 	MemStoreKey = "mem_capability"
 )
 
+// KeyPrefix converts string to KVStore's key
 func KeyPrefix(p string) []byte {
 	return []byte(p)
 }

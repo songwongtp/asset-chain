@@ -1,0 +1,44 @@
+syntax = "proto3";
+package songwongtp.asset.asset;
+
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+// this line is used by starport scaffolding # 1
+
+option go_package = "github.com/songwongtp/asset-chain/x/asset/types";
+
+// Msg defines the asset Msg service.
+service Msg {
+    // BuyAsset defines a method for buying any asset using uusd
+    rpc BuyAsset(MsgBuyAsset) returns (MsgBuyAssetResponse);
+
+    // SellAsset defines a method for selling any asset to uusd
+    rpc SellAsset(MsgSellAsset) returns (MsgSellAssetResponse);
+}
+
+// MsgBuyAsset repesents a message to buy asset using uusd
+message MsgBuyAsset {
+    option (gogoproto.equal)            = false;
+    option (gogoproto.goproto_getters)  = false;
+
+    string  address     = 1 [(gogoproto.moretags) = "yaml:\"address\""];
+    string  denom       = 2;
+    uint64  amount      = 3;
+}
+
+// MsgBuyAssetResponse defines Msg/BuyAsset response type.
+message MsgBuyAssetResponse {}
+
+// MsgSellAsset represents a message to sell asset to uusd
+message MsgSellAsset {
+    option (gogoproto.equal)            = false;
+    option (gogoproto.goproto_getters)  = false;
+
+    string  address     = 1 [(gogoproto.moretags) = "yaml:\"address\""];
+    string  denom       = 2;
+    uint64  amount      = 3;
+}
+
+// MsgSellAssetResponse defines Msg/SellAsset response type.
+message MsgSellAssetResponse {}

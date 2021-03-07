@@ -2,11 +2,15 @@ syntax = "proto3";
 package songwongtp.asset.asset;
 
 // this line is used by starport scaffolding # genesis/proto/import
+import "gogoproto/gogo.proto";
+import "asset/asset.proto";
 
 option go_package = "github.com/songwongtp/asset-chain/x/asset/types";
 
 // GenesisState defines the capability module's genesis state.
 message GenesisState {
     // this line is used by starport scaffolding # genesis/proto/state
+    string baseDenom        = 1;
+    repeated Asset assets   = 2 [(gogoproto.nullable) = false];
 }
 
