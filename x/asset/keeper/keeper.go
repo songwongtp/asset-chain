@@ -92,6 +92,7 @@ func (k Keeper) Sell(ctx sdk.Context, addr sdk.AccAddress, denom string, amount 
 	return nil
 }
 
+// SetAsset sets the price per unit for the given asset denom
 func (k Keeper) SetAsset(ctx sdk.Context, assetInfo types.Asset) {
 	store := ctx.KVStore(k.storeKey)
 

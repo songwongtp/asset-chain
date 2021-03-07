@@ -8,5 +8,7 @@ import (
 
 // x/asset module sentinel errors
 var (
-	ErrSample = sdkerrors.Register(ModuleName, 1100, "sample error")
+	ErrEmptyAddr	= sdkerrors.Register(ModuleName, 2, "empty address")
+	ErrEmptyDenom	= sdkerrors.Register(ModuleName, 3, "empty asset type")
+	ErrInvalidAmt	= sdkerrors.Register(ModuleName, 4, "non positive asset amount")
 )
