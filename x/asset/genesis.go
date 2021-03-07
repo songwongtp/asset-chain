@@ -13,7 +13,7 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	sdk.RegisterDenom(genState.BaseDenom, sdk.NewDec(1))
 
 	for _, assetInfo := range genState.Assets {
-		k.setAsset(ctx, assetInfo)
+		k.SetAsset(ctx, assetInfo)
 	}
 }
 

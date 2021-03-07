@@ -5,7 +5,7 @@ import (
 
 	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
 	"github.com/songwongtp/asset-chain/app"
-	"github.com/songwongtp/asset-chain/cmd/assetd/cmd"
+	"github.com/songwongtp/asset-chain/cmd/asset-chaind/cmd"
 )
 
 func main() {

@@ -37,7 +37,7 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 }
 
 // Buy exchanges coins from the given addr with the denom asset
-func (k Keeper) Buy (ctx sdk.Context, addr sdk.AccAddress, denom string, amount uint64) error {
+func (k Keeper) Buy(ctx sdk.Context, addr sdk.AccAddress, denom string, amount uint64) error {
 	store := ctx.KVStore(k.storeKey)
 	bz := store.Get(types.KeyPrefix(denom))
 	if bz == nil {
@@ -65,7 +65,7 @@ func (k Keeper) Buy (ctx sdk.Context, addr sdk.AccAddress, denom string, amount 
 }
 
 // Sell exchanges asset from the given addr with coins
-func (k Keeper) Sell (ctx sdk.Context, addr sdk.AccAddress, denom string, amount uint64) error {
+func (k Keeper) Sell(ctx sdk.Context, addr sdk.AccAddress, denom string, amount uint64) error {
 	store := ctx.KVStore(k.storeKey)
 	bz := store.Get(types.KeyPrefix(denom))
 	if bz == nil {
@@ -92,7 +92,7 @@ func (k Keeper) Sell (ctx sdk.Context, addr sdk.AccAddress, denom string, amount
 	return nil
 }
 
-func (k Keeper) setAsset(ctx sdk.Context, assetInfo types.Asset) {
+func (k Keeper) SetAsset(ctx sdk.Context, assetInfo types.Asset) {
 	store := ctx.KVStore(k.storeKey)
 
 	key := types.KeyPrefix(assetInfo.Denom)

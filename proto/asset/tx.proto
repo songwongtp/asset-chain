@@ -2,8 +2,6 @@ syntax = "proto3";
 package songwongtp.asset.asset;
 
 import "gogoproto/gogo.proto";
-import "google/api/annotations.proto";
-import "cosmos/base/query/v1beta1/pagination.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "github.com/songwongtp/asset-chain/x/asset/types";
@@ -22,7 +20,7 @@ message MsgBuyAsset {
     option (gogoproto.equal)            = false;
     option (gogoproto.goproto_getters)  = false;
 
-    string  address     = 1 [(gogoproto.moretags) = "yaml:\"address\""];
+    string  buyer       = 1;
     string  denom       = 2;
     uint64  amount      = 3;
 }
@@ -35,7 +33,7 @@ message MsgSellAsset {
     option (gogoproto.equal)            = false;
     option (gogoproto.goproto_getters)  = false;
 
-    string  address     = 1 [(gogoproto.moretags) = "yaml:\"address\""];
+    string  seller      = 1;
     string  denom       = 2;
     uint64  amount      = 3;
 }

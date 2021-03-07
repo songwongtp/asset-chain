@@ -22,7 +22,7 @@ var _ types.MsgServer = msgServer{}
 func (k msgServer) BuyAsset(goCtx context.Context, msg *types.MsgBuyAsset) (*types.MsgBuyAssetResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	addr, err := sdk.AccAddressFromBech32(msg.Address)
+	addr, err := sdk.AccAddressFromBech32(msg.Buyer)
 	if err != nil {
 		return nil, err
 	}
@@ -35,10 +35,10 @@ func (k msgServer) BuyAsset(goCtx context.Context, msg *types.MsgBuyAsset) (*typ
 	return &types.MsgBuyAssetResponse{}, nil
 }
 
-func (k msgServer) SellAsset(goCtx context.Context, msg *types.MsgBuyAsset) (*types.MsgSellAssetResponse, error) {
+func (k msgServer) SellAsset(goCtx context.Context, msg *types.MsgSellAsset) (*types.MsgSellAssetResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	addr, err := sdk.AccAddressFromBech32(msg.Address)
+	addr, err := sdk.AccAddressFromBech32(msg.Seller)
 	if err != nil {
 		return nil, err
 	}
