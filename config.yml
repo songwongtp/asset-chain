@@ -6,3 +6,18 @@ accounts:
 validator:
   name: user1
   staked: "100000000stake"
+genesis:
+  chain_id: "asset-chain"
+  app_state:
+    asset:
+      base_denom: "uusd"
+      assets: [
+        {
+          denom: "gold",
+          total_supply: "1000000",
+          price: "1000"
+        }
+      ]
+servers:
+  api-address: "localhost:1317"
+  grpc-address: "localhost:9090"
