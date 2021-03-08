@@ -124,7 +124,7 @@ func (k Keeper) GetAssetInfo(ctx sdk.Context, denom string) types.Asset {
 	}
 	price := uint64(binary.BigEndian.Uint64(bz))
 	
-	totalSupply := k.bankKeeper.GetSupply(ctx, denom).Amount.Uint64()
+	totalSupply := k.bankKeeper.GetSupply(ctx).GetTotal().AmountOf(denom).Uint64()
 
 	return types.Asset {
 		Denom: denom,
