@@ -13,7 +13,11 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	sdk.RegisterDenom(genState.BaseDenom, sdk.NewDec(1))
 
 	for _, assetInfo := range genState.Assets {
-		k.SetAsset(ctx, assetInfo)
+		k.SetPrice(ctx, assetInfo.Denom, assetInfo.Price)
+
+		if err := k.AddSupply(ctx, assetInfo.Denom, assetInfo.TotalSupply); err != nil {
+			panic(err)
+		}		
 	}
 }
 

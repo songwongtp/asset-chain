@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"fmt"
+	"encoding/binary"
 
 	"github.com/tendermint/tendermint/libs/log"
 
@@ -43,15 +44,13 @@ func (k Keeper) Buy(ctx sdk.Context, addr sdk.AccAddress, denom string, amount u
 	if bz == nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrUnauthorized, "%s is not a valid asset type", denom)
 	}
-
-	var assetInfo types.Asset
-	k.cdc.MustUnmarshalBinaryBare(bz, &assetInfo)
+	price := uint64(binary.BigEndian.Uint64(bz))
 
 	baseDenom, err := sdk.GetBaseDenom()
 	if err != nil {
 		return err
 	}
-	baseDenomAmt := sdk.NewCoin(baseDenom, sdk.NewIntFromUint64(amount * assetInfo.Price))
+	baseDenomAmt := sdk.NewCoin(baseDenom, sdk.NewIntFromUint64(amount * price))
 	if err = k.bankKeeper.SendCoinsFromAccountToModule(ctx, addr, types.ModuleName, sdk.NewCoins(baseDenomAmt)); err != nil {
 		return err
 	}
@@ -71,9 +70,7 @@ func (k Keeper) Sell(ctx sdk.Context, addr sdk.AccAddress, denom string, amount 
 	if bz == nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrUnauthorized, "%s is not a valid asset type", denom)
 	}
-
-	var assetInfo types.Asset
-	k.cdc.MustUnmarshalBinaryBare(bz, &assetInfo)
+	price := uint64(binary.BigEndian.Uint64(bz))
 
 	denomAmt := sdk.NewCoin(denom, sdk.NewIntFromUint64(amount))
 	if err := k.bankKeeper.SendCoinsFromAccountToModule(ctx, addr, types.ModuleName, sdk.NewCoins(denomAmt)); err != nil {
@@ -84,7 +81,7 @@ func (k Keeper) Sell(ctx sdk.Context, addr sdk.AccAddress, denom string, amount 
 	if err != nil {
 		return err
 	}
-	baseDenomAmt := sdk.NewCoin(baseDenom, sdk.NewIntFromUint64(amount * assetInfo.Price))
+	baseDenomAmt := sdk.NewCoin(baseDenom, sdk.NewIntFromUint64(amount * price))
 	if err = k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, addr, sdk.NewCoins(baseDenomAmt)); err != nil {
 		return err
 	}
@@ -92,11 +89,28 @@ func (k Keeper) Sell(ctx sdk.Context, addr sdk.AccAddress, denom string, amount 
 	return nil
 }
 
-// SetAsset sets the price per unit for the given asset denom
-func (k Keeper) SetAsset(ctx sdk.Context, assetInfo types.Asset) {
+// SetPrice sets the price per unit for the given asset denom
+func (k Keeper) SetPrice(ctx sdk.Context, denom string, price uint64) {
 	store := ctx.KVStore(k.storeKey)
 
-	key := types.KeyPrefix(assetInfo.Denom)
-	info := k.cdc.MustMarshalBinaryBare(&assetInfo)
-	store.Set(key, info)
+	key := types.KeyPrefix(denom)
+	bz := make([]byte, 8)
+	binary.BigEndian.PutUint64(bz, price)
+	store.Set(key, bz)
+}
+
+// AddSupply adds supply amount of the denom asset
+func (k Keeper) AddSupply(ctx sdk.Context, denom string, supply uint64) error {
+	store := ctx.KVStore(k.storeKey)
+	bz := store.Get(types.KeyPrefix(denom))
+	if bz == nil {
+		return sdkerrors.Wrapf(sdkerrors.ErrUnauthorized, "%s is not a valid asset type", denom)
+	}
+
+	amt := sdk.NewCoin(denom, sdk.NewIntFromUint64(supply))
+	if err := k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.NewCoins(amt)); err != nil {
+		return err
+	}
+
+	return nil
 }

@@ -5,6 +5,7 @@ package songwongtp.asset.asset;
 option go_package = "github.com/songwongtp/asset-chain/x/asset/types";
 
 message Asset {
-    string denom = 1;
-    uint64 price = 2;
+    string denom        = 1;
+    uint64 total_supply = 2;
+    uint64 price        = 3;
 }
