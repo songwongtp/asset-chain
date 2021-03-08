@@ -114,3 +114,34 @@ func (k Keeper) AddSupply(ctx sdk.Context, denom string, supply uint64) error {
 
 	return nil
 }
+
+// GetAssetInfo returns the info of the given denom in Asset type
+func (k Keeper) GetAssetInfo(ctx sdk.Context, denom string) types.Asset {
+	store := ctx.KVStore(k.storeKey)
+	bz := store.Get(types.KeyPrefix(denom))
+	if bz == nil {
+		panic(sdkerrors.Wrapf(sdkerrors.ErrUnauthorized, "%s is not a valid asset type", denom))
+	}
+	price := uint64(binary.BigEndian.Uint64(bz))
+	
+	totalSupply := k.bankKeeper.GetSupply(ctx, denom).Amount.Uint64()
+
+	return types.Asset {
+		Denom: denom,
+		TotalSupply: totalSupply,
+		Price: price,
+	}
+}
+
+// GetAllAssetDenoms returns all registered asset denoms
+func (k Keeper) GetAllAssetDenoms(ctx sdk.Context) []string {
+	store := ctx.KVStore(k.storeKey)
+	iterator := store.Iterator(nil, nil)
+	defer iterator.Close()
+	
+	denoms := make([]string, 0)
+	for ; iterator.Valid(); iterator.Next() {
+		denoms = append(denoms, string(iterator.Key()))
+	}
+	return denoms
+}

@@ -1,15 +1,50 @@
 syntax = "proto3";
 package songwongtp.asset.asset;
 
+import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 // this line is used by starport scaffolding # 1
+import "asset/asset.proto";
 
 option go_package = "github.com/songwongtp/asset-chain/x/asset/types";
 
 // Query defines the gRPC querier service.
 service Query {
     // this line is used by starport scaffolding # 2
+
+    // AssetInfo queries the total supply and price of the provided asset
+    rpc AssetInfo(QueryAssetInfoRequest) returns (QueryAssetInfoResponse) {
+        option (google.api.http).get = "/asset-chain/asset/infos/{denom}";
+    } 
+
+    // AllAssetInfos queries the total supply and price of all assets
+    rpc AllAssetInfos(QueryAllAssetInfosRequest) returns (QueryAllAssetInfosResponse) {
+        option (google.api.http).get = "/asset-chain/asset/infos";
+    }
 }
 
 // this line is used by starport scaffolding # 3
+
+// QueryAssetInfoRequest is the request type for the Query/AssetInfo RPC method
+message QueryAssetInfoRequest {
+    option (gogoproto.equal)            = false;
+    option (gogoproto.goproto_getters)  = false;
+
+    // denom is the asset denom to query info for
+    string denom = 1;
+}
+
+// QueryAssetInfoResponse is the response type for the Query/AssetInfo RPC method
+message QueryAssetInfoResponse {
+    // asset is the asset info of the denom
+    Asset asset = 1;
+}
+
+// QueryAllAssetInfosRequest is the request type for the Query/AllAssetInfos RPC method
+message QueryAllAssetInfosRequest {}
+
+// QueryAllAssetInfosResponse is the response type for the Query/AllAssetInfos RPC method
+message QueryAllAssetInfosResponse {
+    repeated Asset assets = 1 [(gogoproto.nullable) = false];
+}
