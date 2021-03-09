@@ -18,6 +18,8 @@ genesis:
           price: "1000"
         }
       ]
+init:
+  home: ".assetchain"
 servers:
   api-address: "localhost:1317"
   grpc-address: "localhost:9090"
