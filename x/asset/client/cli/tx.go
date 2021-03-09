@@ -102,3 +102,63 @@ ignored as it is implied from [buyer].`,
 
 	return cmd
 }
+
+// GetSetPriceCmd returns the message command for setting asset price
+func GetSetPriceCmd() *cobra.Command {
+	cmd := &cobra.Command {
+		Use: "set [denom] [price]",
+		Short: `set the asset price per uusd for the denom type.`,
+		Args: cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			denom := args[0]
+			price, err := strconv.ParseUint(args[1], 10, 64)
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgSetPrice(denom, price)
+			if err := msg.ValidateBasic(); err != nil {
+				return err
+			}
+
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+
+	return cmd
+}
+
+// GetAddSupplyCmd returns the message command for adding the asset supply
+func GetAddSupplyCmd() *cobra.Command {
+	cmd := &cobra.Command {
+		Use: "add [denom] [amount]",
+		Short: `add the asset supply for the denom type.`,
+		Args: cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			denom := args[0]
+			amount, err := strconv.ParseUint(args[1], 10, 64)
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgAddSupply(denom, amount)
+			if err := msg.ValidateBasic(); err != nil {
+				return err
+			}
+
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+
+	return cmd
+}

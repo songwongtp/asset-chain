@@ -8,11 +8,15 @@ import (
 const (
 	TypeMsgBuyAsset		= "buy_asset"
 	TypeMsgSellAsset	= "sell_asset"
+	TypeMsgSetPrice		= "set_price"
+	TypeMsgAddSupply	= "add_supply"
 )
 
 var (
 	_ sdk.Msg = &MsgBuyAsset{}
 	_ sdk.Msg = &MsgSellAsset{}
+	_ sdk.Msg = &MsgSetPrice{}
+	_ sdk.Msg = &MsgAddSupply{}
 )
 
 // NewMsgBuyAsset creates a new MsgBuyAsset instance
@@ -109,6 +113,86 @@ func (msg MsgSellAsset) ValidateBasic() error {
 		return ErrEmptyAddr
 	}
 
+	if msg.Denom == "" {
+		return ErrEmptyDenom
+	}
+
+	if msg.Amount <= 0 {
+		return ErrInvalidAmt
+	}
+
+	return nil
+}
+
+
+// NewMsgSetPrice creates a new MsgSetPrice instance
+func NewMsgSetPrice(denom string, price uint64) *MsgSetPrice {
+	return &MsgSetPrice {
+		Denom: denom,
+		Price: price,
+	}
+}
+
+// Route implements sdk.Msg interface
+func (msg MsgSetPrice) Route() string { return RouterKey }
+
+// Type implements sdk.Msg interface
+func (msg MsgSetPrice) Type() string { return TypeMsgSetPrice }
+
+// GetSigners implements sdk.Msg interface. It returns address(es) that
+// must sign over msg.GetSignBytes()
+func (msg MsgSetPrice) GetSigners() []sdk.AccAddress {
+	return nil
+}
+
+// GetSignBytes returns the message byte to sign over
+func (msg MsgSetPrice) GetSignBytes() []byte {
+	bz := ModuleCdc.MustMarshalJSON(&msg)
+	return sdk.MustSortJSON(bz)
+}
+
+// ValidateBasic implements sdk.Msg interface
+func (msg MsgSetPrice) ValidateBasic() error {
+	if msg.Denom == "" {
+		return ErrEmptyDenom
+	}
+
+	if msg.Price <= 0 {
+		return ErrInvalidAmt
+	}
+
+	return nil
+}
+
+
+// NewMsgAddSupply creates a new MsgAddSupply instance
+func NewMsgAddSupply(denom string, amount uint64) *MsgAddSupply {
+	return &MsgAddSupply {
+		Denom: denom,
+		Amount: amount,
+	}
+}
+
+// Route implements sdk.Msg interface
+func (msg MsgAddSupply) Route() string { return RouterKey }
+
+// Type implments sdk.Msg interface
+func (msg MsgAddSupply) Type() string { return TypeMsgAddSupply }
+
+// GetSigners implments sdk.Msg interface. It returns address(es) that
+// must sign over msg.GetSignBytes()
+func (msg MsgAddSupply) GetSigners() []sdk.AccAddress {
+	return nil
+}
+
+// GetSignBytes returns the message byte to sign over
+func (msg MsgAddSupply) GetSignBytes() []byte {
+	bz := ModuleCdc.MustMarshalJSON(&msg)
+	return sdk.MustSortJSON(bz)
+}
+
+// ValidateBasic implements sdk.Msg interface
+func (msg MsgAddSupply) ValidateBasic() error {
 	if msg.Denom == "" {
 		return ErrEmptyDenom
 	}

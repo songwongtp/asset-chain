@@ -50,3 +50,21 @@ func (k msgServer) SellAsset(goCtx context.Context, msg *types.MsgSellAsset) (*t
 
 	return &types.MsgSellAssetResponse{}, nil
 }
+
+func (k msgServer) SetAssetPrice(goCtx context.Context, msg *types.MsgSetPrice) (*types.MsgSetPriceResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	k.SetPrice(ctx, msg.Denom, msg.Price)
+	return &types.MsgSetPriceResponse{}, nil
+}
+
+func (k msgServer) AddAssetSupply(goCtx context.Context, msg *types.MsgAddSupply) (*types.MsgAddSupplyResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	err := k.AddSupply(ctx, msg.Denom, msg.Amount)
+	if err != nil {
+		return nil, err
+	}
+	
+	return &types.MsgAddSupplyResponse{}, nil
+}

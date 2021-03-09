@@ -13,6 +13,12 @@ service Msg {
 
     // SellAsset defines a method for selling any asset to uusd
     rpc SellAsset(MsgSellAsset) returns (MsgSellAssetResponse);
+
+    // SetAssetPrice defines a method for setting any asset price
+    rpc SetAssetPrice(MsgSetPrice) returns (MsgSetPriceResponse);
+
+    // AddAssetSupply defines a method for adding any asset supply
+    rpc AddAssetSupply(MsgAddSupply) returns (MsgAddSupplyResponse);
 }
 
 // MsgBuyAsset repesents a message to buy asset using uusd
@@ -40,3 +46,21 @@ message MsgSellAsset {
 
 // MsgSellAssetResponse defines Msg/SellAsset response type.
 message MsgSellAssetResponse {}
+
+// MsgSetPrice represents a message to set asset price
+message MsgSetPrice {
+    string  denom       = 1;
+    uint64  price       = 2;
+}
+
+// MsgSetPriceResponse defines Msg/SetPrice response type.
+message MsgSetPriceResponse {}
+
+// MsgAddSupply represents a message to add asset supply
+message MsgAddSupply {
+    string  denom       = 1;
+    uint64  amount      = 2;
+}
+
+// MsgAddSupplyResopnse defines Msg/AddSupply response type.
+message MsgAddSupplyResponse {}
