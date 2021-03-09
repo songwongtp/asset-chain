@@ -49,8 +49,9 @@ message MsgSellAssetResponse {}
 
 // MsgSetPrice represents a message to set asset price
 message MsgSetPrice {
-    string  denom       = 1;
-    uint64  price       = 2;
+    string  addr        = 1;
+    string  denom       = 2;
+    uint64  price       = 3;
 }
 
 // MsgSetPriceResponse defines Msg/SetPrice response type.
@@ -58,8 +59,9 @@ message MsgSetPriceResponse {}
 
 // MsgAddSupply represents a message to add asset supply
 message MsgAddSupply {
-    string  denom       = 1;
-    uint64  amount      = 2;
+    string  addr        = 1;
+    string  denom       = 2;
+    uint64  amount      = 3;
 }
 
 // MsgAddSupplyResopnse defines Msg/AddSupply response type.

@@ -88,7 +88,7 @@ import (
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 )
 
-const Name = "AssetApp"
+const Name = "asset-chain"
 
 // this line is used by starport scaffolding # stargate/wasm/app/enabledProposals
 
@@ -144,11 +144,13 @@ var (
 		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
 		govtypes.ModuleName:            {authtypes.Burner},
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
+		assettypes.ModuleName:			{authtypes.Minter},
 	}
 
 	// module accounts that are allowed to receive tokens
 	allowedReceivingModAcc = map[string]bool{
 		distrtypes.ModuleName: true,
+		assettypes.ModuleName: true,
 	}
 )
 

@@ -126,8 +126,9 @@ func (msg MsgSellAsset) ValidateBasic() error {
 
 
 // NewMsgSetPrice creates a new MsgSetPrice instance
-func NewMsgSetPrice(denom string, price uint64) *MsgSetPrice {
+func NewMsgSetPrice(addr string, denom string, price uint64) *MsgSetPrice {
 	return &MsgSetPrice {
+		Addr: addr,
 		Denom: denom,
 		Price: price,
 	}
@@ -142,7 +143,11 @@ func (msg MsgSetPrice) Type() string { return TypeMsgSetPrice }
 // GetSigners implements sdk.Msg interface. It returns address(es) that
 // must sign over msg.GetSignBytes()
 func (msg MsgSetPrice) GetSigners() []sdk.AccAddress {
-	return nil
+	addr, err := sdk.AccAddressFromBech32(msg.Addr)
+	if err != nil {
+		panic(err)
+	}
+	return []sdk.AccAddress{addr}
 }
 
 // GetSignBytes returns the message byte to sign over
@@ -166,8 +171,9 @@ func (msg MsgSetPrice) ValidateBasic() error {
 
 
 // NewMsgAddSupply creates a new MsgAddSupply instance
-func NewMsgAddSupply(denom string, amount uint64) *MsgAddSupply {
+func NewMsgAddSupply(addr string, denom string, amount uint64) *MsgAddSupply {
 	return &MsgAddSupply {
+		Addr: addr,
 		Denom: denom,
 		Amount: amount,
 	}
@@ -182,7 +188,11 @@ func (msg MsgAddSupply) Type() string { return TypeMsgAddSupply }
 // GetSigners implments sdk.Msg interface. It returns address(es) that
 // must sign over msg.GetSignBytes()
 func (msg MsgAddSupply) GetSigners() []sdk.AccAddress {
-	return nil
+	addr, err := sdk.AccAddressFromBech32(msg.Addr)
+	if err != nil {
+		panic(err)
+	}
+	return []sdk.AccAddress{addr}
 }
 
 // GetSignBytes returns the message byte to sign over

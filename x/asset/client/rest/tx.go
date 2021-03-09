@@ -84,7 +84,7 @@ func NewSetPriceRequestHandlerFn(clientCtx client.Context) http.HandlerFunc {
 			return
 		}
 
-		msg := types.NewMsgSetPrice(denom, req.Price)
+		msg := types.NewMsgSetPrice(req.BaseReq.From, denom, req.Price)
 		tx.WriteGeneratedTxResponse(clientCtx, w, req.BaseReq, msg)
 	}
 }
@@ -106,7 +106,7 @@ func NewAddSupplyRequestHandlerFn(clientCtx client.Context) http.HandlerFunc {
 			return
 		}
 
-		msg := types.NewMsgAddSupply(denom, req.Amount)
+		msg := types.NewMsgAddSupply(req.BaseReq.From, denom, req.Amount)
 		tx.WriteGeneratedTxResponse(clientCtx, w, req.BaseReq, msg)
 	}
 }

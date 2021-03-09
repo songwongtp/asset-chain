@@ -26,6 +26,8 @@ func GetTxCmd() *cobra.Command {
 	cmd.AddCommand(
 		GetBuyAssetCmd(),
 		GetSellAssetCmd(),
+		GetSetPriceCmd(),
+		GetAddSupplyCmd(),
 	)
 
 	return cmd
@@ -106,22 +108,23 @@ ignored as it is implied from [buyer].`,
 // GetSetPriceCmd returns the message command for setting asset price
 func GetSetPriceCmd() *cobra.Command {
 	cmd := &cobra.Command {
-		Use: "set [denom] [price]",
+		Use: "set [addr] [denom] [price]",
 		Short: `set the asset price per uusd for the denom type.`,
-		Args: cobra.ExactArgs(2),
+		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
+			cmd.Flags().Set(flags.FlagFrom, args[0])
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			denom := args[0]
-			price, err := strconv.ParseUint(args[1], 10, 64)
+			denom := args[1]
+			price, err := strconv.ParseUint(args[2], 10, 64)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgSetPrice(denom, price)
+			msg := types.NewMsgSetPrice(clientCtx.GetFromAddress().String(), denom, price)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
@@ -129,6 +132,8 @@ func GetSetPriceCmd() *cobra.Command {
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
+
+	flags.AddTxFlagsToCmd(cmd)
 
 	return cmd
 }
@@ -136,22 +141,24 @@ func GetSetPriceCmd() *cobra.Command {
 // GetAddSupplyCmd returns the message command for adding the asset supply
 func GetAddSupplyCmd() *cobra.Command {
 	cmd := &cobra.Command {
-		Use: "add [denom] [amount]",
+		Use: "add [user1] [denom] [amount]",
 		Short: `add the asset supply for the denom type.`,
-		Args: cobra.ExactArgs(2),
+		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
+			cmd.Flags().Set(flags.FlagFrom, args[0])
+
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			denom := args[0]
-			amount, err := strconv.ParseUint(args[1], 10, 64)
+			denom := args[1]
+			amount, err := strconv.ParseUint(args[2], 10, 64)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgAddSupply(denom, amount)
+			msg := types.NewMsgAddSupply(clientCtx.GetFromAddress().String(), denom, amount)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
@@ -159,6 +166,8 @@ func GetAddSupplyCmd() *cobra.Command {
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
+
+	flags.AddTxFlagsToCmd(cmd)
 
 	return cmd
 }
