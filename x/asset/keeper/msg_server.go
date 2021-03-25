@@ -27,8 +27,8 @@ func (k msgServer) BuyAsset(goCtx context.Context, msg *types.MsgBuyAsset) (*typ
 		return nil, err
 	}
 
-	err = k.Buy(ctx, addr, msg.Denom, msg.Amount)
-	if err != nil {
+	orderID := k.CreatePendingOrder(ctx, types.TypeOrderBuy, addr, msg.Denom, msg.Amount)
+	if err := k.RequestAssetPrice(ctx, orderID, msg.Denom, msg.SourceChannel); err != nil {
 		return nil, err
 	}
 
@@ -43,19 +43,19 @@ func (k msgServer) SellAsset(goCtx context.Context, msg *types.MsgSellAsset) (*t
 		return nil, err
 	}
 
-	err = k.Sell(ctx, addr, msg.Denom, msg.Amount)
-	if err != nil {
+	orderID := k.CreatePendingOrder(ctx, types.TypeOrderSell, addr, msg.Denom, msg.Amount)
+	if err := k.RequestAssetPrice(ctx, orderID, msg.Denom, msg.SourceChannel); err != nil {
 		return nil, err
 	}
 
 	return &types.MsgSellAssetResponse{}, nil
 }
 
-func (k msgServer) SetAssetPrice(goCtx context.Context, msg *types.MsgSetPrice) (*types.MsgSetPriceResponse, error) {
+func (k msgServer) SetAssetOracleScriptID(goCtx context.Context, msg *types.MsgSetOracleScriptID) (*types.MsgSetOracleScriptIDResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	k.SetPrice(ctx, msg.Denom, msg.Price)
-	return &types.MsgSetPriceResponse{}, nil
+	k.SetOracleScriptID(ctx, msg.Denom, msg.OracleScriptId)
+	return &types.MsgSetOracleScriptIDResponse{}, nil
 }
 
 func (k msgServer) AddAssetSupply(goCtx context.Context, msg *types.MsgAddSupply) (*types.MsgAddSupplyResponse, error) {
@@ -65,6 +65,6 @@ func (k msgServer) AddAssetSupply(goCtx context.Context, msg *types.MsgAddSupply
 	if err != nil {
 		return nil, err
 	}
-	
+
 	return &types.MsgAddSupplyResponse{}, nil
 }

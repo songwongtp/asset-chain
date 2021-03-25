@@ -15,7 +15,7 @@ service Msg {
     rpc SellAsset(MsgSellAsset) returns (MsgSellAssetResponse);
 
     // SetAssetPrice defines a method for setting any asset price
-    rpc SetAssetPrice(MsgSetPrice) returns (MsgSetPriceResponse);
+    rpc SetAssetOracleScriptID(MsgSetOracleScriptID) returns (MsgSetOracleScriptIDResponse);
 
     // AddAssetSupply defines a method for adding any asset supply
     rpc AddAssetSupply(MsgAddSupply) returns (MsgAddSupplyResponse);
@@ -26,9 +26,10 @@ message MsgBuyAsset {
     option (gogoproto.equal)            = false;
     option (gogoproto.goproto_getters)  = false;
 
-    string  buyer       = 1;
-    string  denom       = 2;
-    uint64  amount      = 3;
+    string  buyer           = 1;
+    string  denom           = 2;
+    uint64  amount          = 3;
+    string  source_channel  = 4;
 }
 
 // MsgBuyAssetResponse defines Msg/BuyAsset response type.
@@ -39,23 +40,24 @@ message MsgSellAsset {
     option (gogoproto.equal)            = false;
     option (gogoproto.goproto_getters)  = false;
 
-    string  seller      = 1;
-    string  denom       = 2;
-    uint64  amount      = 3;
+    string  seller          = 1;
+    string  denom           = 2;
+    uint64  amount          = 3;
+    string  source_channel  = 4;
 }
 
 // MsgSellAssetResponse defines Msg/SellAsset response type.
 message MsgSellAssetResponse {}
 
-// MsgSetPrice represents a message to set asset price
-message MsgSetPrice {
-    string  addr        = 1;
-    string  denom       = 2;
-    uint64  price       = 3;
+// MsgSetOracleScriptID represents a message to set asset price
+message MsgSetOracleScriptID {
+    string  addr                = 1;
+    string  denom               = 2;
+    uint64  oracle_script_id    = 3;
 }
 
 // MsgSetPriceResponse defines Msg/SetPrice response type.
-message MsgSetPriceResponse {}
+message MsgSetOracleScriptIDResponse {}
 
 // MsgAddSupply represents a message to add asset supply
 message MsgAddSupply {

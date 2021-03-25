@@ -1,15 +1,14 @@
 package types
 
-
 //-----------------------------------------------------------------------------
 // Asset
 
 // NewAsset returns a new asset info containing the denom name, totalsupply, and price
-func NewAsset(denom string, totalSupply uint64, price uint64) Asset {
-	asset := Asset {
-		Denom: denom,
-		TotalSupply: totalSupply,
-		Price: price,
+func NewAsset(denom string, totalSupply uint64, oracleScriptID uint64) Asset {
+	asset := Asset{
+		Denom:          denom,
+		TotalSupply:    totalSupply,
+		OracleScriptId: oracleScriptID,
 	}
 	return asset
 }
@@ -24,10 +23,6 @@ type Assets []Asset
 // NewAssets construct a new asset set
 func NewAssets(assets ...Asset) Assets {
 	result := make([]Asset, 0, len(assets))
-
-	for _, asset := range assets {
-		result = append(result, asset)
-	}
-
+	result = append(result, assets...)
 	return result
 }

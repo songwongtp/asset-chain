@@ -10,22 +10,27 @@ import (
 // state.
 func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) {
 	// this line is used by starport scaffolding # genesis/module/init
-	sdk.RegisterDenom(genState.BaseDenom, sdk.NewDec(1))
-
 	for _, assetInfo := range genState.Assets {
-		k.SetPrice(ctx, assetInfo.Denom, assetInfo.Price)
+		// change to IBC
+		k.SetOracleScriptID(ctx, assetInfo.Denom, assetInfo.OracleScriptId)
 
 		if err := k.AddSupply(ctx, assetInfo.Denom, assetInfo.TotalSupply); err != nil {
 			panic(err)
-		}		
+		}
+
+		k.SetPort(ctx, types.PortID)
+		k.BindPort(ctx, types.PortID)
 	}
 }
 
 // ExportGenesis returns the capability module's exported genesis.
 func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
-	genesis := types.DefaultGenesis()
+	// genesis := types.DefaultGenesis()
 
 	// this line is used by starport scaffolding # genesis/module/export
+	assets := k.GetAllAssetInfos(ctx)
 
-	return genesis
+	return &types.GenesisState{
+		Assets: assets,
+	}
 }

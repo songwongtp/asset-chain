@@ -30,9 +30,10 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // MsgBuyAsset repesents a message to buy asset using uusd
 type MsgBuyAsset struct {
-	Buyer  string `protobuf:"bytes,1,opt,name=buyer,proto3" json:"buyer,omitempty"`
-	Denom  string `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
-	Amount uint64 `protobuf:"varint,3,opt,name=amount,proto3" json:"amount,omitempty"`
+	Buyer         string `protobuf:"bytes,1,opt,name=buyer,proto3" json:"buyer,omitempty"`
+	Denom         string `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
+	Amount        uint64 `protobuf:"varint,3,opt,name=amount,proto3" json:"amount,omitempty"`
+	SourceChannel string `protobuf:"bytes,4,opt,name=source_channel,json=sourceChannel,proto3" json:"source_channel,omitempty"`
 }
 
 func (m *MsgBuyAsset) Reset()         { *m = MsgBuyAsset{} }
@@ -107,9 +108,10 @@ var xxx_messageInfo_MsgBuyAssetResponse proto.InternalMessageInfo
 
 // MsgSellAsset represents a message to sell asset to uusd
 type MsgSellAsset struct {
-	Seller string `protobuf:"bytes,1,opt,name=seller,proto3" json:"seller,omitempty"`
-	Denom  string `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
-	Amount uint64 `protobuf:"varint,3,opt,name=amount,proto3" json:"amount,omitempty"`
+	Seller        string `protobuf:"bytes,1,opt,name=seller,proto3" json:"seller,omitempty"`
+	Denom         string `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
+	Amount        uint64 `protobuf:"varint,3,opt,name=amount,proto3" json:"amount,omitempty"`
+	SourceChannel string `protobuf:"bytes,4,opt,name=source_channel,json=sourceChannel,proto3" json:"source_channel,omitempty"`
 }
 
 func (m *MsgSellAsset) Reset()         { *m = MsgSellAsset{} }
@@ -182,25 +184,25 @@ func (m *MsgSellAssetResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgSellAssetResponse proto.InternalMessageInfo
 
-// MsgSetPrice represents a message to set asset price
-type MsgSetPrice struct {
-	Addr  string `protobuf:"bytes,1,opt,name=addr,proto3" json:"addr,omitempty"`
-	Denom string `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
-	Price uint64 `protobuf:"varint,3,opt,name=price,proto3" json:"price,omitempty"`
+// MsgSetOracleScriptID represents a message to set asset price
+type MsgSetOracleScriptID struct {
+	Addr           string `protobuf:"bytes,1,opt,name=addr,proto3" json:"addr,omitempty"`
+	Denom          string `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
+	OracleScriptId uint64 `protobuf:"varint,3,opt,name=oracle_script_id,json=oracleScriptId,proto3" json:"oracle_script_id,omitempty"`
 }
 
-func (m *MsgSetPrice) Reset()         { *m = MsgSetPrice{} }
-func (m *MsgSetPrice) String() string { return proto.CompactTextString(m) }
-func (*MsgSetPrice) ProtoMessage()    {}
-func (*MsgSetPrice) Descriptor() ([]byte, []int) {
+func (m *MsgSetOracleScriptID) Reset()         { *m = MsgSetOracleScriptID{} }
+func (m *MsgSetOracleScriptID) String() string { return proto.CompactTextString(m) }
+func (*MsgSetOracleScriptID) ProtoMessage()    {}
+func (*MsgSetOracleScriptID) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d916a3b302eb5de7, []int{4}
 }
-func (m *MsgSetPrice) XXX_Unmarshal(b []byte) error {
+func (m *MsgSetOracleScriptID) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MsgSetPrice) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *MsgSetOracleScriptID) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MsgSetPrice.Marshal(b, m, deterministic)
+		return xxx_messageInfo_MsgSetOracleScriptID.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -210,55 +212,55 @@ func (m *MsgSetPrice) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return b[:n], nil
 	}
 }
-func (m *MsgSetPrice) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MsgSetPrice.Merge(m, src)
+func (m *MsgSetOracleScriptID) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgSetOracleScriptID.Merge(m, src)
 }
-func (m *MsgSetPrice) XXX_Size() int {
+func (m *MsgSetOracleScriptID) XXX_Size() int {
 	return m.Size()
 }
-func (m *MsgSetPrice) XXX_DiscardUnknown() {
-	xxx_messageInfo_MsgSetPrice.DiscardUnknown(m)
+func (m *MsgSetOracleScriptID) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgSetOracleScriptID.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MsgSetPrice proto.InternalMessageInfo
+var xxx_messageInfo_MsgSetOracleScriptID proto.InternalMessageInfo
 
-func (m *MsgSetPrice) GetAddr() string {
+func (m *MsgSetOracleScriptID) GetAddr() string {
 	if m != nil {
 		return m.Addr
 	}
 	return ""
 }
 
-func (m *MsgSetPrice) GetDenom() string {
+func (m *MsgSetOracleScriptID) GetDenom() string {
 	if m != nil {
 		return m.Denom
 	}
 	return ""
 }
 
-func (m *MsgSetPrice) GetPrice() uint64 {
+func (m *MsgSetOracleScriptID) GetOracleScriptId() uint64 {
 	if m != nil {
-		return m.Price
+		return m.OracleScriptId
 	}
 	return 0
 }
 
 // MsgSetPriceResponse defines Msg/SetPrice response type.
-type MsgSetPriceResponse struct {
+type MsgSetOracleScriptIDResponse struct {
 }
 
-func (m *MsgSetPriceResponse) Reset()         { *m = MsgSetPriceResponse{} }
-func (m *MsgSetPriceResponse) String() string { return proto.CompactTextString(m) }
-func (*MsgSetPriceResponse) ProtoMessage()    {}
-func (*MsgSetPriceResponse) Descriptor() ([]byte, []int) {
+func (m *MsgSetOracleScriptIDResponse) Reset()         { *m = MsgSetOracleScriptIDResponse{} }
+func (m *MsgSetOracleScriptIDResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgSetOracleScriptIDResponse) ProtoMessage()    {}
+func (*MsgSetOracleScriptIDResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d916a3b302eb5de7, []int{5}
 }
-func (m *MsgSetPriceResponse) XXX_Unmarshal(b []byte) error {
+func (m *MsgSetOracleScriptIDResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MsgSetPriceResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *MsgSetOracleScriptIDResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MsgSetPriceResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_MsgSetOracleScriptIDResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -268,17 +270,17 @@ func (m *MsgSetPriceResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte,
 		return b[:n], nil
 	}
 }
-func (m *MsgSetPriceResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MsgSetPriceResponse.Merge(m, src)
+func (m *MsgSetOracleScriptIDResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgSetOracleScriptIDResponse.Merge(m, src)
 }
-func (m *MsgSetPriceResponse) XXX_Size() int {
+func (m *MsgSetOracleScriptIDResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *MsgSetPriceResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_MsgSetPriceResponse.DiscardUnknown(m)
+func (m *MsgSetOracleScriptIDResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgSetOracleScriptIDResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MsgSetPriceResponse proto.InternalMessageInfo
+var xxx_messageInfo_MsgSetOracleScriptIDResponse proto.InternalMessageInfo
 
 // MsgAddSupply represents a message to add asset supply
 type MsgAddSupply struct {
@@ -383,8 +385,8 @@ func init() {
 	proto.RegisterType((*MsgBuyAssetResponse)(nil), "songwongtp.asset.asset.MsgBuyAssetResponse")
 	proto.RegisterType((*MsgSellAsset)(nil), "songwongtp.asset.asset.MsgSellAsset")
 	proto.RegisterType((*MsgSellAssetResponse)(nil), "songwongtp.asset.asset.MsgSellAssetResponse")
-	proto.RegisterType((*MsgSetPrice)(nil), "songwongtp.asset.asset.MsgSetPrice")
-	proto.RegisterType((*MsgSetPriceResponse)(nil), "songwongtp.asset.asset.MsgSetPriceResponse")
+	proto.RegisterType((*MsgSetOracleScriptID)(nil), "songwongtp.asset.asset.MsgSetOracleScriptID")
+	proto.RegisterType((*MsgSetOracleScriptIDResponse)(nil), "songwongtp.asset.asset.MsgSetOracleScriptIDResponse")
 	proto.RegisterType((*MsgAddSupply)(nil), "songwongtp.asset.asset.MsgAddSupply")
 	proto.RegisterType((*MsgAddSupplyResponse)(nil), "songwongtp.asset.asset.MsgAddSupplyResponse")
 }
@@ -392,33 +394,36 @@ func init() {
 func init() { proto.RegisterFile("asset/tx.proto", fileDescriptor_d916a3b302eb5de7) }
 
 var fileDescriptor_d916a3b302eb5de7 = []byte{
-	// 408 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x93, 0x3f, 0x6f, 0xda, 0x40,
-	0x18, 0xc6, 0xed, 0xf2, 0x47, 0x70, 0x6d, 0x19, 0xae, 0xae, 0x85, 0x18, 0x0c, 0x82, 0x0e, 0x48,
-	0x6d, 0x6d, 0xa9, 0xdd, 0xba, 0xc1, 0xd6, 0xc1, 0x12, 0xc2, 0x5b, 0x12, 0x25, 0x32, 0xdc, 0xe9,
-	0x40, 0x32, 0x3e, 0x8b, 0x3b, 0x2b, 0xf8, 0x1b, 0x64, 0x89, 0x94, 0x8f, 0xc0, 0xc7, 0xc9, 0xc8,
-	0x98, 0x31, 0x82, 0x25, 0x1f, 0x23, 0xf2, 0x9d, 0x7d, 0xa0, 0x24, 0x58, 0x24, 0x0b, 0xba, 0xf7,
-	0x78, 0xde, 0xe7, 0xa7, 0xc7, 0x8f, 0x0e, 0x34, 0x7c, 0xc6, 0x30, 0x77, 0xf8, 0xca, 0x8e, 0x96,
-	0x94, 0x53, 0x68, 0x32, 0x1a, 0x92, 0x6b, 0x1a, 0x12, 0x1e, 0xd9, 0xe2, 0x2f, 0xf9, 0xdb, 0x32,
-	0x08, 0x25, 0x54, 0x48, 0x9c, 0xf4, 0x24, 0xd5, 0xdd, 0x73, 0xf0, 0xd9, 0x65, 0x64, 0x18, 0x27,
-	0x83, 0x54, 0x04, 0x0d, 0x50, 0x99, 0xc4, 0x09, 0x5e, 0x36, 0xf5, 0x8e, 0xde, 0xaf, 0x8f, 0xe5,
-	0x90, 0xde, 0x22, 0x1c, 0xd2, 0x45, 0xf3, 0x93, 0xbc, 0x15, 0x03, 0x34, 0x41, 0xd5, 0x5f, 0xd0,
-	0x38, 0xe4, 0xcd, 0x52, 0x47, 0xef, 0x97, 0xc7, 0xd9, 0xf4, 0xaf, 0x76, 0xb3, 0x6e, 0x6b, 0x4f,
-	0xeb, 0xb6, 0xd6, 0xfd, 0x0e, 0xbe, 0x1d, 0x98, 0x8f, 0x31, 0x8b, 0x68, 0xc8, 0x70, 0xf7, 0x12,
-	0x7c, 0x71, 0x19, 0xf1, 0x70, 0x10, 0x48, 0xa8, 0x09, 0xaa, 0x0c, 0x07, 0x81, 0xa2, 0x66, 0xd3,
-	0x87, 0xb1, 0x26, 0x30, 0x0e, 0xfd, 0x15, 0xd7, 0x15, 0x59, 0x3d, 0xcc, 0x47, 0xcb, 0xf9, 0x14,
-	0x43, 0x08, 0xca, 0x3e, 0x42, 0x39, 0x54, 0x9c, 0x8f, 0x20, 0x0d, 0x50, 0x89, 0xd2, 0x95, 0x8c,
-	0x28, 0x87, 0x2c, 0x5d, 0x6e, 0xa7, 0x28, 0x23, 0x91, 0x6e, 0x80, 0x90, 0x17, 0x47, 0x51, 0x90,
-	0xbc, 0x03, 0x73, 0x24, 0x59, 0x96, 0x47, 0x39, 0xe6, 0xa4, 0x3f, 0xb7, 0x25, 0x50, 0x72, 0x19,
-	0x81, 0x17, 0xa0, 0xa6, 0x0a, 0xec, 0xd9, 0x6f, 0xd7, 0x6f, 0x1f, 0x14, 0xd1, 0xfa, 0x79, 0x82,
-	0x28, 0xa7, 0xc0, 0x2b, 0x50, 0xdf, 0x57, 0xf5, 0xa3, 0x60, 0x53, 0xa9, 0x5a, 0xbf, 0x4e, 0x51,
-	0x29, 0x80, 0x0f, 0xbe, 0x7a, 0x98, 0x8b, 0x3b, 0x59, 0x4c, 0xaf, 0x70, 0x5d, 0x8a, 0x0a, 0x33,
-	0xbc, 0xec, 0x04, 0x22, 0xd0, 0x18, 0x20, 0x24, 0x10, 0x59, 0x2b, 0x45, 0x41, 0xd4, 0x97, 0x2e,
-	0x0c, 0xf2, 0xaa, 0x8f, 0xe1, 0xff, 0xfb, 0xad, 0xa5, 0x6f, 0xb6, 0x96, 0xfe, 0xb8, 0xb5, 0xf4,
-	0xbb, 0x9d, 0xa5, 0x6d, 0x76, 0x96, 0xf6, 0xb0, 0xb3, 0xb4, 0x33, 0x87, 0xcc, 0xf9, 0x2c, 0x9e,
-	0xd8, 0x53, 0xba, 0x70, 0xf6, 0x8e, 0x8e, 0xf0, 0xfa, 0x3d, 0x9d, 0xf9, 0xf3, 0xd0, 0x59, 0x39,
-	0xd9, 0x3b, 0x4e, 0x22, 0xcc, 0x26, 0x55, 0xf1, 0x3a, 0xff, 0x3e, 0x07, 0x00, 0x00, 0xff, 0xff,
-	0x07, 0x9b, 0xd1, 0xdb, 0xdd, 0x03, 0x00, 0x00,
+	// 458 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x54, 0x41, 0x8b, 0xd3, 0x40,
+	0x18, 0xcd, 0xd8, 0x5a, 0x76, 0x3f, 0xb5, 0xc8, 0x58, 0x43, 0x29, 0x92, 0x5d, 0xa2, 0x42, 0x41,
+	0x4d, 0x40, 0x3d, 0x79, 0xeb, 0xea, 0x65, 0x0f, 0x45, 0x69, 0x6e, 0x22, 0x84, 0x34, 0x33, 0x4c,
+	0x23, 0xe9, 0x4c, 0xc8, 0x4c, 0x70, 0x03, 0x9e, 0x04, 0xc1, 0xa3, 0x3f, 0x61, 0x8f, 0xfe, 0x14,
+	0x8f, 0x7b, 0xf4, 0x28, 0xed, 0xc5, 0x9f, 0x21, 0x9d, 0xa4, 0xb3, 0x61, 0xdd, 0x0d, 0xdb, 0x83,
+	0x97, 0x30, 0xdf, 0xcb, 0xfb, 0xbe, 0xf7, 0x66, 0xde, 0x30, 0xd0, 0x8f, 0xa4, 0xa4, 0xca, 0x57,
+	0x27, 0x5e, 0x96, 0x0b, 0x25, 0xb0, 0x2d, 0x05, 0x67, 0x9f, 0x04, 0x67, 0x2a, 0xf3, 0xf4, 0xaf,
+	0xea, 0x3b, 0x1a, 0x30, 0xc1, 0x84, 0xa6, 0xf8, 0x9b, 0x55, 0xc5, 0x76, 0xbf, 0x20, 0xb8, 0x35,
+	0x95, 0xec, 0xa8, 0x28, 0x27, 0x1b, 0x16, 0x1e, 0xc0, 0xcd, 0x79, 0x51, 0xd2, 0x7c, 0x88, 0x0e,
+	0xd1, 0x78, 0x7f, 0x56, 0x15, 0x1b, 0x94, 0x50, 0x2e, 0x96, 0xc3, 0x1b, 0x15, 0xaa, 0x0b, 0x6c,
+	0x43, 0x2f, 0x5a, 0x8a, 0x82, 0xab, 0x61, 0xe7, 0x10, 0x8d, 0xbb, 0xb3, 0xba, 0xc2, 0x8f, 0xa1,
+	0x2f, 0x45, 0x91, 0xc7, 0x34, 0x8c, 0x17, 0x11, 0xe7, 0x34, 0x1d, 0x76, 0x75, 0xdb, 0x9d, 0x0a,
+	0x7d, 0x5d, 0x81, 0xaf, 0xf6, 0xbe, 0x9d, 0x1e, 0x58, 0x7f, 0x4e, 0x0f, 0x2c, 0xf7, 0x3e, 0xdc,
+	0x6b, 0x78, 0x98, 0x51, 0x99, 0x09, 0x2e, 0xa9, 0xfb, 0x15, 0xc1, 0xed, 0xa9, 0x64, 0x01, 0x4d,
+	0xd3, 0xca, 0x9c, 0x0d, 0x3d, 0x49, 0xd3, 0xd4, 0xb8, 0xab, 0xab, 0xff, 0x6d, 0xcf, 0x86, 0x41,
+	0xd3, 0x86, 0xf1, 0xf7, 0xb1, 0xc6, 0xd5, 0xdb, 0x3c, 0x8a, 0x53, 0x1a, 0xc4, 0x79, 0x92, 0xa9,
+	0xe3, 0x37, 0x18, 0x43, 0x37, 0x22, 0x64, 0x6b, 0x52, 0xaf, 0xaf, 0xb0, 0x38, 0x86, 0xbb, 0x42,
+	0xf7, 0x86, 0x52, 0x37, 0x87, 0x09, 0xa9, 0xcd, 0xf6, 0x45, 0x73, 0x26, 0x71, 0x1d, 0x78, 0x70,
+	0x99, 0x96, 0xf1, 0xf2, 0x4e, 0x1f, 0xd5, 0x84, 0x90, 0xa0, 0xc8, 0xb2, 0xb4, 0xdc, 0xc1, 0xc3,
+	0x15, 0xc7, 0x54, 0xef, 0xda, 0x4c, 0xdc, 0x2a, 0x3d, 0xff, 0xd1, 0x81, 0xce, 0x54, 0x32, 0xfc,
+	0x01, 0xf6, 0xcc, 0xad, 0x79, 0xe8, 0x5d, 0x7e, 0xe9, 0xbc, 0x46, 0xac, 0xa3, 0x27, 0xd7, 0x20,
+	0x6d, 0x55, 0x70, 0x08, 0xfb, 0xe7, 0xb9, 0x3f, 0x6a, 0xe9, 0x34, 0xac, 0xd1, 0xd3, 0xeb, 0xb0,
+	0x8c, 0xc0, 0x67, 0xb0, 0x03, 0xaa, 0x34, 0x76, 0x21, 0xbe, 0xf6, 0x39, 0x17, 0xd8, 0xa3, 0x97,
+	0xbb, 0xb0, 0x8d, 0x3a, 0x81, 0xfe, 0x84, 0x10, 0xad, 0x5e, 0x07, 0xd6, 0xb6, 0x47, 0x13, 0x42,
+	0xeb, 0x1e, 0xff, 0x89, 0xea, 0xe8, 0xf8, 0xe7, 0xca, 0x41, 0x67, 0x2b, 0x07, 0xfd, 0x5e, 0x39,
+	0xe8, 0xfb, 0xda, 0xb1, 0xce, 0xd6, 0x8e, 0xf5, 0x6b, 0xed, 0x58, 0xef, 0x7d, 0x96, 0xa8, 0x45,
+	0x31, 0xf7, 0x62, 0xb1, 0xf4, 0xcf, 0x27, 0xfa, 0x7a, 0xd6, 0xb3, 0x78, 0x11, 0x25, 0xdc, 0x3f,
+	0xf1, 0xeb, 0x87, 0xa5, 0xcc, 0xa8, 0x9c, 0xf7, 0xf4, 0x73, 0xf1, 0xe2, 0x6f, 0x00, 0x00, 0x00,
+	0xff, 0xff, 0xef, 0x7b, 0x83, 0x0d, 0x6e, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -438,7 +443,7 @@ type MsgClient interface {
 	// SellAsset defines a method for selling any asset to uusd
 	SellAsset(ctx context.Context, in *MsgSellAsset, opts ...grpc.CallOption) (*MsgSellAssetResponse, error)
 	// SetAssetPrice defines a method for setting any asset price
-	SetAssetPrice(ctx context.Context, in *MsgSetPrice, opts ...grpc.CallOption) (*MsgSetPriceResponse, error)
+	SetAssetOracleScriptID(ctx context.Context, in *MsgSetOracleScriptID, opts ...grpc.CallOption) (*MsgSetOracleScriptIDResponse, error)
 	// AddAssetSupply defines a method for adding any asset supply
 	AddAssetSupply(ctx context.Context, in *MsgAddSupply, opts ...grpc.CallOption) (*MsgAddSupplyResponse, error)
 }
@@ -469,9 +474,9 @@ func (c *msgClient) SellAsset(ctx context.Context, in *MsgSellAsset, opts ...grp
 	return out, nil
 }
 
-func (c *msgClient) SetAssetPrice(ctx context.Context, in *MsgSetPrice, opts ...grpc.CallOption) (*MsgSetPriceResponse, error) {
-	out := new(MsgSetPriceResponse)
-	err := c.cc.Invoke(ctx, "/songwongtp.asset.asset.Msg/SetAssetPrice", in, out, opts...)
+func (c *msgClient) SetAssetOracleScriptID(ctx context.Context, in *MsgSetOracleScriptID, opts ...grpc.CallOption) (*MsgSetOracleScriptIDResponse, error) {
+	out := new(MsgSetOracleScriptIDResponse)
+	err := c.cc.Invoke(ctx, "/songwongtp.asset.asset.Msg/SetAssetOracleScriptID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -494,7 +499,7 @@ type MsgServer interface {
 	// SellAsset defines a method for selling any asset to uusd
 	SellAsset(context.Context, *MsgSellAsset) (*MsgSellAssetResponse, error)
 	// SetAssetPrice defines a method for setting any asset price
-	SetAssetPrice(context.Context, *MsgSetPrice) (*MsgSetPriceResponse, error)
+	SetAssetOracleScriptID(context.Context, *MsgSetOracleScriptID) (*MsgSetOracleScriptIDResponse, error)
 	// AddAssetSupply defines a method for adding any asset supply
 	AddAssetSupply(context.Context, *MsgAddSupply) (*MsgAddSupplyResponse, error)
 }
@@ -509,8 +514,8 @@ func (*UnimplementedMsgServer) BuyAsset(ctx context.Context, req *MsgBuyAsset) (
 func (*UnimplementedMsgServer) SellAsset(ctx context.Context, req *MsgSellAsset) (*MsgSellAssetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SellAsset not implemented")
 }
-func (*UnimplementedMsgServer) SetAssetPrice(ctx context.Context, req *MsgSetPrice) (*MsgSetPriceResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SetAssetPrice not implemented")
+func (*UnimplementedMsgServer) SetAssetOracleScriptID(ctx context.Context, req *MsgSetOracleScriptID) (*MsgSetOracleScriptIDResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetAssetOracleScriptID not implemented")
 }
 func (*UnimplementedMsgServer) AddAssetSupply(ctx context.Context, req *MsgAddSupply) (*MsgAddSupplyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddAssetSupply not implemented")
@@ -556,20 +561,20 @@ func _Msg_SellAsset_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Msg_SetAssetPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgSetPrice)
+func _Msg_SetAssetOracleScriptID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgSetOracleScriptID)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MsgServer).SetAssetPrice(ctx, in)
+		return srv.(MsgServer).SetAssetOracleScriptID(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/songwongtp.asset.asset.Msg/SetAssetPrice",
+		FullMethod: "/songwongtp.asset.asset.Msg/SetAssetOracleScriptID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).SetAssetPrice(ctx, req.(*MsgSetPrice))
+		return srv.(MsgServer).SetAssetOracleScriptID(ctx, req.(*MsgSetOracleScriptID))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -605,8 +610,8 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Msg_SellAsset_Handler,
 		},
 		{
-			MethodName: "SetAssetPrice",
-			Handler:    _Msg_SetAssetPrice_Handler,
+			MethodName: "SetAssetOracleScriptID",
+			Handler:    _Msg_SetAssetOracleScriptID_Handler,
 		},
 		{
 			MethodName: "AddAssetSupply",
@@ -637,6 +642,13 @@ func (m *MsgBuyAsset) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if len(m.SourceChannel) > 0 {
+		i -= len(m.SourceChannel)
+		copy(dAtA[i:], m.SourceChannel)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.SourceChannel)))
+		i--
+		dAtA[i] = 0x22
+	}
 	if m.Amount != 0 {
 		i = encodeVarintTx(dAtA, i, uint64(m.Amount))
 		i--
@@ -702,6 +714,13 @@ func (m *MsgSellAsset) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if len(m.SourceChannel) > 0 {
+		i -= len(m.SourceChannel)
+		copy(dAtA[i:], m.SourceChannel)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.SourceChannel)))
+		i--
+		dAtA[i] = 0x22
+	}
 	if m.Amount != 0 {
 		i = encodeVarintTx(dAtA, i, uint64(m.Amount))
 		i--
@@ -747,7 +766,7 @@ func (m *MsgSellAssetResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *MsgSetPrice) Marshal() (dAtA []byte, err error) {
+func (m *MsgSetOracleScriptID) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -757,18 +776,18 @@ func (m *MsgSetPrice) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MsgSetPrice) MarshalTo(dAtA []byte) (int, error) {
+func (m *MsgSetOracleScriptID) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MsgSetPrice) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *MsgSetOracleScriptID) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Price != 0 {
-		i = encodeVarintTx(dAtA, i, uint64(m.Price))
+	if m.OracleScriptId != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.OracleScriptId))
 		i--
 		dAtA[i] = 0x18
 	}
@@ -789,7 +808,7 @@ func (m *MsgSetPrice) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *MsgSetPriceResponse) Marshal() (dAtA []byte, err error) {
+func (m *MsgSetOracleScriptIDResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -799,12 +818,12 @@ func (m *MsgSetPriceResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MsgSetPriceResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *MsgSetOracleScriptIDResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MsgSetPriceResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *MsgSetOracleScriptIDResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -905,6 +924,10 @@ func (m *MsgBuyAsset) Size() (n int) {
 	if m.Amount != 0 {
 		n += 1 + sovTx(uint64(m.Amount))
 	}
+	l = len(m.SourceChannel)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
 	return n
 }
 
@@ -934,6 +957,10 @@ func (m *MsgSellAsset) Size() (n int) {
 	if m.Amount != 0 {
 		n += 1 + sovTx(uint64(m.Amount))
 	}
+	l = len(m.SourceChannel)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
 	return n
 }
 
@@ -946,7 +973,7 @@ func (m *MsgSellAssetResponse) Size() (n int) {
 	return n
 }
 
-func (m *MsgSetPrice) Size() (n int) {
+func (m *MsgSetOracleScriptID) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -960,13 +987,13 @@ func (m *MsgSetPrice) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	if m.Price != 0 {
-		n += 1 + sovTx(uint64(m.Price))
+	if m.OracleScriptId != 0 {
+		n += 1 + sovTx(uint64(m.OracleScriptId))
 	}
 	return n
 }
 
-func (m *MsgSetPriceResponse) Size() (n int) {
+func (m *MsgSetOracleScriptIDResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1122,6 +1149,38 @@ func (m *MsgBuyAsset) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SourceChannel", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SourceChannel = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipTx(dAtA[iNdEx:])
@@ -1305,6 +1364,38 @@ func (m *MsgSellAsset) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SourceChannel", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SourceChannel = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipTx(dAtA[iNdEx:])
@@ -1376,7 +1467,7 @@ func (m *MsgSellAssetResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MsgSetPrice) Unmarshal(dAtA []byte) error {
+func (m *MsgSetOracleScriptID) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1399,10 +1490,10 @@ func (m *MsgSetPrice) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MsgSetPrice: wiretype end group for non-group")
+			return fmt.Errorf("proto: MsgSetOracleScriptID: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MsgSetPrice: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MsgSetOracleScriptID: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1471,9 +1562,9 @@ func (m *MsgSetPrice) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Price", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field OracleScriptId", wireType)
 			}
-			m.Price = 0
+			m.OracleScriptId = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowTx
@@ -1483,7 +1574,7 @@ func (m *MsgSetPrice) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Price |= uint64(b&0x7F) << shift
+				m.OracleScriptId |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1509,7 +1600,7 @@ func (m *MsgSetPrice) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MsgSetPriceResponse) Unmarshal(dAtA []byte) error {
+func (m *MsgSetOracleScriptIDResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1532,10 +1623,10 @@ func (m *MsgSetPriceResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MsgSetPriceResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: MsgSetOracleScriptIDResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MsgSetPriceResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MsgSetOracleScriptIDResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:

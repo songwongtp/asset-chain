@@ -51,12 +51,7 @@ func queryAssetInfo(ctx sdk.Context, req abci.RequestQuery, k Keeper, legacyQuer
 }
 
 func queryAllAssetInfos(ctx sdk.Context, req abci.RequestQuery, k Keeper, legacyQuerierCdc *codec.LegacyAmino) ([]byte, error) {
-	denoms := k.GetAllAssetDenoms(ctx)
-
-	assets := make([]types.Asset, 0)
-	for _, denom := range denoms {
-		assets = append(assets, k.GetAssetInfo(ctx, denom))
-	}
+	assets := k.GetAllAssetInfos(ctx)
 
 	bz, err := codec.MarshalJSONIndent(legacyQuerierCdc, assets)
 	if err != nil {

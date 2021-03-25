@@ -88,7 +88,7 @@ import (
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 )
 
-const Name = "asset-chain"
+const AppName = "asset-chain"
 
 // this line is used by starport scaffolding # stargate/wasm/app/enabledProposals
 
@@ -144,7 +144,7 @@ var (
 		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
 		govtypes.ModuleName:            {authtypes.Burner},
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
-		assettypes.ModuleName:			{authtypes.Minter},
+		assettypes.ModuleName:          {authtypes.Minter},
 	}
 
 	// module accounts that are allowed to receive tokens
@@ -165,7 +165,7 @@ func init() {
 		panic(err)
 	}
 
-	DefaultNodeHome = filepath.Join(userHomeDir, "."+Name)
+	DefaultNodeHome = filepath.Join(userHomeDir, "."+AppName)
 }
 
 // App extends an ABCI application, but with most of its parameters exported.
@@ -225,7 +225,7 @@ func New(
 	cdc := encodingConfig.Amino
 	interfaceRegistry := encodingConfig.InterfaceRegistry
 
-	bApp := baseapp.NewBaseApp(Name, logger, db, encodingConfig.TxConfig.TxDecoder(), baseAppOptions...)
+	bApp := baseapp.NewBaseApp(AppName, logger, db, encodingConfig.TxConfig.TxDecoder(), baseAppOptions...)
 	bApp.SetCommitMultiStoreTracer(traceStore)
 	bApp.SetAppVersion(version.Version)
 	bApp.SetInterfaceRegistry(interfaceRegistry)
@@ -263,6 +263,7 @@ func New(
 	// grant capabilities for the ibc and ibc-transfer modules
 	scopedIBCKeeper := app.CapabilityKeeper.ScopeToModule(ibchost.ModuleName)
 	scopedTransferKeeper := app.CapabilityKeeper.ScopeToModule(ibctransfertypes.ModuleName)
+	scopedAssetKeeper := app.CapabilityKeeper.ScopeToModule(assettypes.ModuleName)
 
 	// add keepers
 	app.AccountKeeper = authkeeper.NewAccountKeeper(
@@ -319,9 +320,17 @@ func New(
 	)
 	transferModule := transfer.NewAppModule(app.TransferKeeper)
 
+	app.assetKeeper = assetkeeper.NewKeeper(
+		appCodec, keys[assettypes.StoreKey], keys[assettypes.MemStoreKey],
+		app.IBCKeeper.ChannelKeeper, &app.IBCKeeper.PortKeeper,
+		app.AccountKeeper, app.BankKeeper, scopedAssetKeeper,
+	)
+	assetModule := asset.NewAppModule(appCodec, app.assetKeeper)
+
 	// Create static IBC router, add transfer route, then set and seal it
 	ibcRouter := porttypes.NewRouter()
 	ibcRouter.AddRoute(ibctransfertypes.ModuleName, transferModule)
+	ibcRouter.AddRoute(assettypes.ModuleName, assetModule)
 	app.IBCKeeper.SetRouter(ibcRouter)
 
 	// Create evidence Keeper for to register the IBC light client misbehaviour evidence route
@@ -330,10 +339,6 @@ func New(
 	)
 	// If evidence needs to be handled for the app, set routes in router here and seal
 	app.EvidenceKeeper = *evidenceKeeper
-
-	app.assetKeeper = *assetkeeper.NewKeeper(
-		appCodec, keys[assettypes.StoreKey], keys[assettypes.MemStoreKey], app.BankKeeper,
-	)
 
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 
@@ -371,7 +376,7 @@ func New(
 		ibc.NewAppModule(app.IBCKeeper),
 		params.NewAppModule(app.ParamsKeeper),
 		transferModule,
-		asset.NewAppModule(appCodec, app.assetKeeper),
+		assetModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 

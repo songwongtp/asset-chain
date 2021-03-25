@@ -1,0 +1,18 @@
+syntax = "proto3";
+package songwongtp.asset.asset;
+
+import "gogoproto/gogo.proto";
+// this line is used by starport scaffolding # 1
+
+option go_package = "github.com/songwongtp/asset-chain/x/asset/types";
+
+message AssetOrder {
+    string order_id         = 1;
+    string order_type       = 2;
+    string addr             = 3;
+    string denom            = 4;
+    uint64 price_per_unit   = 5;
+    uint64 amount           = 6;
+    string status           = 7;
+    string status_log       = 8;
+}

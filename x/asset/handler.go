@@ -21,13 +21,13 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		case *types.MsgBuyAsset:
 			res, err := msgServer.BuyAsset(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
-		
+
 		case *types.MsgSellAsset:
 			res, err := msgServer.SellAsset(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
 
-		case *types.MsgSetPrice:
-			res, err := msgServer.SetAssetPrice(sdk.WrapSDKContext(ctx), msg)
+		case *types.MsgSetOracleScriptID:
+			res, err := msgServer.SetAssetOracleScriptID(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
 
 		case *types.MsgAddSupply:

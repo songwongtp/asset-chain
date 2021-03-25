@@ -23,6 +23,6 @@ func registerTxHandlers(clientCtx client.Context, r *mux.Router) {
 	// this line is used by starport scaffolding # 4
 	r.HandleFunc("/asset/buy/{denom}", NewBuyAssetRequestHandlerFn(clientCtx)).Methods("POST")
 	r.HandleFunc("/asset/sell/{denom}", NewSellAssetRequestHandlerFn(clientCtx)).Methods("POST")
-	r.HandleFunc("/asset/set/{denom}", NewSetPriceRequestHandlerFn(clientCtx)).Methods("POST")
+	r.HandleFunc("/asset/set/{denom}", NewSetOracleScriptIDRequestHandlerFn(clientCtx)).Methods("POST")
 	r.HandleFunc("/asset/add/{denom}", NewAddSupplyRequestHandlerFn(clientCtx)).Methods("POST")
 }

@@ -10,16 +10,15 @@ genesis:
   chain_id: "asset-chain"
   app_state:
     asset:
-      base_denom: "uusd"
       assets: [
         {
           denom: "gold",
           total_supply: "1000000",
-          price: "1000"
+          oracle_script_id: "2"
         }
       ]
 init:
-  home: "/home/gitpod/.asset-chain"
+  home: "/Users/nat/.asset-chain"
 servers:
   api-address: "localhost:1317"
-  grpc-address: "localhost:9090"
+  grpc-address: "localhost:26657"

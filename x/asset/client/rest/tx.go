@@ -13,14 +13,15 @@ import (
 
 // Req defines the property of a buy/sell/add_supply request's body
 type Req struct {
-	BaseReq	rest.BaseReq	`json:"base_req" yaml:"base_req"`
-	Amount	uint64			`json:"amount" yaml:"amount"`
+	BaseReq       rest.BaseReq `json:"base_req" yaml:"base_req"`
+	Amount        uint64       `json:"amount" yaml:"amount"`
+	SourceChannel string       `json:"source_channel" yaml:"source_channel"`
 }
 
-// PriceReq defines the property of a price_set request's body
-type PriceReq struct {
-	BaseReq	rest.BaseReq	`json:"base_req" yaml:"base_req"`
-	Price	uint64			`json:"price" yaml:"price"`
+// PriceReq defines the property of a oracle_script_set request's body
+type OracleScriptIdReq struct {
+	BaseReq        rest.BaseReq `json:"base_req" yaml:"base_req"`
+	OracleScriptId uint64       `json:"oracle_script_id" yaml:"oracle_script_id"`
 }
 
 // NewBuyAssetRequestHandlerFn returns an HTTP REST handler for creating
@@ -40,7 +41,7 @@ func NewBuyAssetRequestHandlerFn(clientCtx client.Context) http.HandlerFunc {
 			return
 		}
 
-		msg := types.NewMsgBuyAsset(req.BaseReq.From, denom, req.Amount)
+		msg := types.NewMsgBuyAsset(req.BaseReq.From, denom, req.Amount, req.SourceChannel)
 		tx.WriteGeneratedTxResponse(clientCtx, w, req.BaseReq, msg)
 	}
 }
@@ -62,19 +63,19 @@ func NewSellAssetRequestHandlerFn(clientCtx client.Context) http.HandlerFunc {
 			return
 		}
 
-		msg := types.NewMsgSellAsset(req.BaseReq.From, denom, req.Amount)
+		msg := types.NewMsgSellAsset(req.BaseReq.From, denom, req.Amount, req.SourceChannel)
 		tx.WriteGeneratedTxResponse(clientCtx, w, req.BaseReq, msg)
 	}
 }
 
 // NewSetPriceRequestHandlerFn returns an HTTP REST handler for creating
 // a MsgSetPrice transaction
-func NewSetPriceRequestHandlerFn(clientCtx client.Context) http.HandlerFunc {
+func NewSetOracleScriptIDRequestHandlerFn(clientCtx client.Context) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		denom := vars["denom"]
 
-		var req PriceReq
+		var req OracleScriptIdReq
 		if !rest.ReadRESTReq(w, r, clientCtx.LegacyAmino, &req) {
 			return
 		}
@@ -84,7 +85,7 @@ func NewSetPriceRequestHandlerFn(clientCtx client.Context) http.HandlerFunc {
 			return
 		}
 
-		msg := types.NewMsgSetPrice(req.BaseReq.From, denom, req.Price)
+		msg := types.NewMsgSetOracleScriptID(req.BaseReq.From, denom, req.OracleScriptId)
 		tx.WriteGeneratedTxResponse(clientCtx, w, req.BaseReq, msg)
 	}
 }

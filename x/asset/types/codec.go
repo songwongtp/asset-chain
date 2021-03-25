@@ -17,7 +17,7 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgBuyAsset{},
 		&MsgSellAsset{},
-		&MsgSetPrice{},
+		&MsgSetOracleScriptID{},
 		&MsgAddSupply{},
 	)
 
@@ -25,6 +25,15 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 }
 
 var (
-	amino     = codec.NewLegacyAmino()
-	ModuleCdc = codec.NewAminoCodec(amino)
+	amino = codec.NewLegacyAmino()
+
+	// ModuleCdc references the global x/ibc-transfer module codec. Note, the codec
+	// should ONLY be used in certain instances of tests and for JSON encoding.
+	//
+	// The actual codec used for serialization should be provided to x/ibc transfer and
+	// defined at the application level.
+	ModuleCdc = codec.NewProtoCodec(cdctypes.NewInterfaceRegistry())
+
+	// AminoCdc is a amino codec created to support amino json compatible msgs.
+	AminoCdc = codec.NewAminoCodec(amino)
 )

@@ -57,7 +57,7 @@ func NewRootCmd() (*cobra.Command, params.EncodingConfig) {
 		WithHomeDir(app.DefaultNodeHome)
 
 	rootCmd := &cobra.Command{
-		Use:   app.Name + "d",
+		Use:   app.AppName + "d",
 		Short: "Stargate CosmosHub App",
 		PersistentPreRunE: func(cmd *cobra.Command, _ []string) error {
 			if err := client.SetCmdClientContextHandler(initClientCtx, cmd); err != nil {

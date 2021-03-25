@@ -2,6 +2,13 @@
 
 **asset** is a blockchain built using Cosmos SDK and Tendermint and created with [Starport](https://github.com/tendermint/starport).
 
+## Manual Build
+- go: 1.15.10
+- buf (install with binary): https://docs.buf.build/installation/
+- gRPC-Gateway (v1): https://github.com/grpc-ecosystem/grpc-gateway/tree/v1
+
+`./scripts/protocgen.sh` generates types/*.go from proto files
+
 ## Get started
 
 ```

@@ -10,7 +10,6 @@ option go_package = "github.com/songwongtp/asset-chain/x/asset/types";
 // GenesisState defines the capability module's genesis state.
 message GenesisState {
     // this line is used by starport scaffolding # genesis/proto/state
-    string base_denom       = 1;
-    repeated Asset assets   = 2 [(gogoproto.nullable) = false];
+    repeated Asset assets   = 1 [(gogoproto.nullable) = false];
 }
 
