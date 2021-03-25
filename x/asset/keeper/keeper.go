@@ -158,8 +158,8 @@ func (k Keeper) Sell(ctx sdk.Context, order types.AssetOrder) error {
 	}
 
 	denomAmt := sdk.NewCoin(order.Denom, sdk.NewIntFromUint64(order.Amount))
-	if err = k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, accAddr, sdk.NewCoins(denomAmt)); err != nil {
-		err := sdkerrors.Wrap(err, "fail to transfer coins to the seller")
+	if err = k.bankKeeper.SendCoinsFromAccountToModule(ctx, accAddr, types.ModuleName, sdk.NewCoins(denomAmt)); err != nil {
+		err := sdkerrors.Wrap(err, "fail to transfer assets to the asset module")
 		order.Status = types.StatusOrderFail
 		order.StatusLog = err.Error()
 		k.SetOrder(ctx, order)
@@ -167,8 +167,8 @@ func (k Keeper) Sell(ctx sdk.Context, order types.AssetOrder) error {
 	}
 
 	baseDenomAmt := sdk.NewCoin(types.BaseDenom, sdk.NewIntFromUint64(order.Amount*order.PricePerUnit))
-	if err = k.bankKeeper.SendCoinsFromAccountToModule(ctx, accAddr, types.ModuleName, sdk.NewCoins(baseDenomAmt)); err != nil {
-		err := sdkerrors.Wrap(err, "fail to transfer assets to the asset module")
+	if err = k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, accAddr, sdk.NewCoins(baseDenomAmt)); err != nil {
+		err := sdkerrors.Wrap(err, "fail to transfer coins to the seller")
 		order.Status = types.StatusOrderFail
 		order.StatusLog = err.Error()
 		k.SetOrder(ctx, order)

@@ -1,8 +1,8 @@
 accounts:
   - name: user1
-    coins: ["10000000000uusd", "100000000stake"]
+    coins: ["1000000000000uusd", "100000000stake"]
   - name: user2
-    coins: ["10000000000uusd"]
+    coins: ["1000000000000uusd"]
 validator:
   name: user1
   staked: "100000000stake"
